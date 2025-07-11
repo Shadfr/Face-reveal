@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>NotYe Reveal!!</title>
+  <style>
+    body {
+      background-color: #1e1e2f;
+      color: #f2f2f2;
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    #countdown {
+      font-size: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    #reveal-link {
+      display: none;
+      background-color: #f56040; /* Instagram orange */
+      color: white;
+      padding: 15px 30px;
+      text-decoration: none;
+      border-radius: 8px;
+      font-size: 1.2rem;
+      transition: background-color 0.3s ease;
+    }
+
+    #reveal-link:hover {
+      background-color: #e74b35;
+    }
+
+    p {
+      margin-top: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <h1>NotYe Reveal!!!</h1>
+  <div id="countdown">Loading...</div>
+  <a id="reveal-link" href="https://www.instagram.com/_shadfr/" target="_blank">NotYe</a>
+  <p id="thanks" style="display: none;">The time has come</p>
+
+  <script>
+    // Set the target date (14th of this month at midnight)
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = now.getMonth(); // 0-indexed
+    const revealDay = 14;
+    const revealDate = new Date(year, month, revealDay, 0, 0, 0);
+
+    // If today is past the 14th, push it to next month
+    if (now > revealDate) {
+      revealDate.setMonth(revealDate.getMonth() + 1);
+    }
+
+    const countdownEl = document.getElementById('countdown');
+    const revealLink = document.getElementById('reveal-link');
+    const thanksEl = document.getElementById('thanks');
+
+    function updateCountdown() {
+      const now = new Date().getTime();
+      const distance = revealDate - now;
+
+      if (distance <= 0) {
+        // Time's up — show the Instagram link
+        countdownEl.style.display = 'none';
+        revealLink.style.display = 'inline-block';
+        thanksEl.style.display = 'block';
+        clearInterval(timerInterval);
+        return;
+      }
+
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+		
+      countdownEl.innerHTML = 
+        `${days}d ${hours}h ${minutes}m ${seconds}s`;
+    }
+
+    const timerInterval = setInterval(updateCountdown, 1000);
+    updateCountdown(); // Run immediately
+  </script>
+</body>
+</html>
